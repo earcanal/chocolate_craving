@@ -40,7 +40,7 @@ process_eprime_file <- function(path) {
   df
 }
 
-
+# find . -name "*.txt" -exec iconv -f utf-16 -t utf-8 {} -o /utf8/{} \;
 paths <- list.files("data", pattern = ".txt", full.names = TRUE)
 paths
 paths <- c("data/101-1.txt", "data/10-1.txt", "data/102-1.txt")
