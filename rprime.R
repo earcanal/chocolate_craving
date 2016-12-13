@@ -1,5 +1,6 @@
 library("rprime")
 library("plyr")
+library("dplyr")
 
 setwd("/home/paul/src/R/phd/craving_chocolate")
 
@@ -22,6 +23,13 @@ process_eprime_file <- function(path) {
   }
   df            <- df[to_pick]
   df$subject    <- frame1$Subject
+  # CAVEAT: duplicate subject files
+  if (path == "data/21-1 (2).txt" ) {
+    df$subject <- 990
+  }
+  if (path == "data/22-1 (2).txt" ) {
+    df$subject <- 991
+  }
   df$researcher <- frame1$ResearcherID
   df$group      <- frame1$Group
   df$age        <- frame1$Age
@@ -47,9 +55,21 @@ process_eprime_file <- function(path) {
 # find . -name "*.txt" -exec iconv -f utf-16 -t utf-8 {} -o /utf8/{} \;
 paths <- list.files("data", pattern = ".txt", full.names = TRUE)
 paths
-paths <- c("data/101-1.txt", "data/10-1.txt", "data/102-1.txt", "data/103-1.txt")
+#paths <- c("data/101-1.txt", "data/10-1.txt", "data/102-1.txt", "data/103-1.txt")
 #paths
-ensemble <- ldply(paths, process_eprime_file)
+results <- ldply(paths, process_eprime_file)
+
+# set factors
+results$researcher <- as.factor(results$researcher)
+results$subject    <- as.factor(results$subject)
+results$group      <- as.factor(results$group)
+
+write.table(results,"results.csv")
+
+# Ps per group
+results %>% group_by(group, subject) %>% summarise() %>% group_by(group) %>% summarise(count=n())
+
+
 # overall <- ddply(ensemble, .(Eprime.Basename, Running), summarise, 
 #                  Score = sum(CorrectResponse),
 #                  PropCorrect = Score / length(CorrectResponse))
