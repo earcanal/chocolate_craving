@@ -14,8 +14,12 @@ process_eprime_file <- function(path) {
   frames <- keep_levels(frames, 3)
   df     <- to_data_frame(frames)
   
-  # FIXME: Not all tasks have all fields
-  to_pick <- c("Eprime.Basename", "Running", "Item", "response", "Choice","Cycle")
+
+  to_pick <- c("Eprime.Basename", "Running", "Item", "response", "Choice", "Cycle")
+  if (frame1$Group == "Distraction" ) {
+    # get Universes and elephants!
+    to_pick <- c(to_pick,"MeditationCheck.RESP")
+  }
   df            <- df[to_pick]
   df$subject    <- frame1$Subject
   df$researcher <- frame1$ResearcherID
@@ -43,7 +47,7 @@ process_eprime_file <- function(path) {
 # find . -name "*.txt" -exec iconv -f utf-16 -t utf-8 {} -o /utf8/{} \;
 paths <- list.files("data", pattern = ".txt", full.names = TRUE)
 paths
-paths <- c("data/101-1.txt", "data/10-1.txt", "data/102-1.txt")
+paths <- c("data/101-1.txt", "data/10-1.txt", "data/102-1.txt", "data/103-1.txt")
 #paths
 ensemble <- ldply(paths, process_eprime_file)
 # overall <- ddply(ensemble, .(Eprime.Basename, Running), summarise, 
