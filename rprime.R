@@ -16,7 +16,7 @@ process_eprime_file <- function(path) {
   df     <- to_data_frame(frames)
   
 
-  to_pick <- c("Eprime.Basename", "Running", "Item", "response", "Choice", "Cycle")
+  to_pick <- c("Running", "Item", "response", "Choice", "Cycle")
   if (frame1$Group == "Distraction" ) {
     # get Universes and elephants!
     to_pick <- c(to_pick,"MeditationCheck.RESP")
@@ -52,19 +52,21 @@ process_eprime_file <- function(path) {
   df
 }
 
-# find . -name "*.txt" -exec iconv -f utf-16 -t utf-8 {} -o /utf8/{} \;
-paths <- list.files("data", pattern = ".txt", full.names = TRUE)
-paths
-#paths <- c("data/101-1.txt", "data/10-1.txt", "data/102-1.txt", "data/103-1.txt")
-#paths
-results <- ldply(paths, process_eprime_file)
+# # find . -name "*.txt" -exec iconv -f utf-16 -t utf-8 {} -o /utf8/{} \;
+# paths <- list.files("data", pattern = ".txt", full.names = TRUE)
+# paths
+# #paths <- c("data/101-1.txt", "data/10-1.txt", "data/102-1.txt", "data/103-1.txt")
+# #paths
+# results <- ldply(paths, process_eprime_file)
+# write.table(results, "results.csv", sep=",", row.names = FALSE)
+# 
+# # set factors
+# results$researcher <- as.factor(results$researcher)
+# results$subject    <- as.factor(results$subject)
+# results$group      <- as.factor(results$group)
 
-# set factors
-results$researcher <- as.factor(results$researcher)
-results$subject    <- as.factor(results$subject)
-results$group      <- as.factor(results$group)
-
-write.table(results,"results.csv")
+library(readr)
+results <- read_csv("results.csv")
 
 # Ps per group
 results %>% group_by(group, subject) %>% summarise() %>% group_by(group) %>% summarise(count=n())
