@@ -1,0 +1,88 @@
+---
+title: 'Mindfulness meditation: cognitive effects and mechanisms'
+author: "paul.sharpe@plymouth.ac.uk (PhD Psychology, Year 1)"
+date: "12th December, 2016"
+output:
+  slidy_presentation:
+    incremental: yes
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 6
+---
+
+```{r setup, include=FALSE, error=TRUE}
+library(knitr)
+opts_chunk$set(dev = 'pdf')
+opts_chunk$set(fig.align='center')
+read_chunk('rprime.R')
+```
+
+# Buddhist psychology and cognitive psychology 
+
+Buddhist Psychology (Subjective)                 Cognitive Psychology (Objective)
+--------------------------------                 --------------------
+Abhidhamma (~3rd Century BCE)                    Mental states
+Dependent Origination                            Mental processes
+< craving < suffering (3rd noble truth)          > Mental health, abilities, happines
+Meditation < craving                             Meditation as psychological intervention
+
+- Does meditation work?
+    - Yes (Buddhists)
+    - Maybe (Psychology)
+        - Mindfulness Based Cognitive Therapy: 43% risk reduction of depressive relapse with three or more previous episodes (Piet & Hougaard, 2011)
+
+# A craving model of smoking
+
+![Smoking habit as operant conditioning](images/addiction_loop.png)
+
+- hard to avoid all cues
+- substitute behaviours (e.g. exercise, relaxation) not always available
+- ... therefore, target craving
+
+# Can meditation reverse the craving cycle?
+
+![Smoking habit as dependent origination](images/dependent_origination.png)
+
+- Meditation < craving
+
+# Reversing chocolate craving (experiment)
+
+![Method](images/method.png)
+
+# Meditation doesn't reverse chocolate craving?
+
+![Picture Task](images/choice.png)
+
+![State mindfulness (TMS)](images/tms.png)
+
+![Subjective craving (CEQ3)](images/ceq.png)
+
+# Meditation _does_ reverse smoking craving
+
+![Elwafi, Witkiewitz, Mallik, Thornhill, & Brewer (2013) ](images/elwafi_et_al.png)
+
+- RCT; 8 sessions of "urge surfing" over 4 weeks
+- abstainers report < craving; non-abstainers report > craving; positive correlation between craving and number of cigarettes smoked
+- Craving reduction delayed
+
+# Next steps: meditation and cognition
+
+- < phone craving?
+- Replicate
+    - 15 mins < extinction and resurgence of laboratory conditioned response (McHugh, Procter, Herzog, Schock, & Reed, 2012)
+    - et al. cognitive tasks (Chiesa, Calati, & Serretti, 2011)
+- Dose effect
+    - Objective measure of mindfulness (cf. TMS)
+        - Are people meditating?  For how long?
+    - Can more powerful interventions affect cognitive tasks more quickly
+        - e.g. reduced attentional blink with 3 month retreat vs. 1 week practice (Slagter et al., 2007)
+    - 8 week course; longitudinal effects on cognitive measures
+
+```{r echo=FALSE}
+
+
+<<rprime>>
+summary(m3)
+```
+
+
