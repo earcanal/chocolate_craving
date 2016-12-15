@@ -1,3 +1,5 @@
+## @knitr rprime
+
 library("rprime")
 library("plyr")
 library("dplyr")
@@ -60,18 +62,41 @@ process_eprime_file <- function(path) {
 # results <- ldply(paths, process_eprime_file)
 # write.table(results, "results.csv", sep=",", row.names = FALSE)
 # 
-# # set factors
-# results$researcher <- as.factor(results$researcher)
-# results$subject    <- as.factor(results$subject)
-# results$group      <- as.factor(results$group)
+
 
 library(readr)
 results <- read_csv("results.csv")
+# # set factors
+results$researcher <- as.factor(results$researcher)
+results$subject    <- as.factor(results$subject)
+results$group      <- as.factor(results$group)
 
 # Ps per group
 results %>% group_by(group, subject) %>% summarise() %>% group_by(group) %>% summarise(count=n())
 
+# CEQ
+ceq <- dplyr::select(results, Running, Item, response, Cycle, subject, group) %>% filter(Running == "CEQquestions") %>% dplyr::select(Item, response, Cycle, subject, group)
+ceq$Item  <- as.factor(ceq$Item)
+ceq$Cycle <- as.factor(ceq$Cycle)
+foo <- group_by(ceq, subject, Cycle, Item, response) %>% summarise(sum(response))
 
+tms <- read_csv("tms.csv")
+tms[,3:4] <- sapply(tms[, 3:4], as.numeric)
+m <- lm(decentering ~ group, data = tms)
+anova(m)
+m <- lm(curiosity ~ group, data = tms)
+anova(m)
+
+ceq <- read_csv("ceq.csv")
+ceq[,3:5] <- sapply(ceq[, 3:5], as.numeric)
+m2 <- aov(ceq3 ~ group, data = ceq)
+summary(m2)
+TukeyHSD(m2) # Follow-up: pair-wise comparisons
+
+choice <- read_csv("choice.csv")
+choice[,3] <- sapply(choice[, 3], as.numeric)
+m3 <- aov(choice_chocolate ~ group, data = choice)
+summary(m3)
 # overall <- ddply(ensemble, .(Eprime.Basename, Running), summarise, 
 #                  Score = sum(CorrectResponse),
 #                  PropCorrect = Score / length(CorrectResponse))
