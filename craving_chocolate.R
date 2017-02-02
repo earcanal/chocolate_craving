@@ -88,8 +88,8 @@ foo <- group_by(ceq, subject, Cycle, Item, response) %>% summarise(sum(response)
 
 # gah!  I wish I'd kept track of how I produced these CSVs from Tina's files
 
-# Curiosity score: The following items are summed: 3, 5, 6, 10, 12, 13
-# Decentering score: The following items are summed: 1, 2, 4, 7, 8, 9, 11
+# TMS.Curiosity = sum(3, 5, 6, 10, 12, 13)
+# TMS.Decentering = sum(1, 2, 4, 7, 8, 9, 11)
 
 tms <- read_csv("tms.csv")
 tms[,3:4] <- sapply(tms[, 3:4], as.numeric)
