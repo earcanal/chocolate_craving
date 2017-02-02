@@ -4,7 +4,8 @@ library("rprime")
 library("plyr")
 library("dplyr")
 
-setwd("/home/paul/src/R/phd/craving_chocolate")
+#setwd("/home/paul/src/R/phd/craving_chocolate")
+setwd("C:/Users/paul/src/chocolate_craving")
 
 # arg, have to understand ePrime data internals :(
 process_eprime_file <- function(path) {
@@ -79,6 +80,11 @@ ceq <- dplyr::select(results, Running, Item, response, Cycle, subject, group) %>
 ceq$Item  <- as.factor(ceq$Item)
 ceq$Cycle <- as.factor(ceq$Cycle)
 foo <- group_by(ceq, subject, Cycle, Item, response) %>% summarise(sum(response))
+
+# gah!  I wish I'd kept track of how I produced these CSVs from Tina's files
+
+# Curiosity score: The following items are summed: 3, 5, 6, 10, 12, 13
+# Decentering score: The following items are summed: 1, 2, 4, 7, 8, 9, 11
 
 tms <- read_csv("tms.csv")
 tms[,3:4] <- sapply(tms[, 3:4], as.numeric)
