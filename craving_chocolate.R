@@ -55,14 +55,19 @@ process_eprime_file <- function(path) {
   df
 }
 
-# # find . -name "*.txt" -exec iconv -f utf-16 -t utf-8 {} -o /utf8/{} \;
-# paths <- list.files("data", pattern = ".txt", full.names = TRUE)
-# paths
-# #paths <- c("data/101-1.txt", "data/10-1.txt", "data/102-1.txt", "data/103-1.txt")
-# #paths
-# results <- ldply(paths, process_eprime_file)
-# write.table(results, "results.csv", sep=",", row.names = FALSE)
-# 
+# e-Prime data files appear to be utf-16, but utf-8 is more convenient?
+# Data files were converted from utf-16 -> utf-8
+# find . -name "*.txt" -exec iconv -f utf-16 -t utf-8 {} -o /utf8/{} \;
+
+# (re)generate results CSV
+results_f <- "results.csv"
+if ( !file.exists(results_f) ) {
+  paths <- list.files("data", pattern = ".txt", full.names = TRUE)
+  paths <- c("data/101-1.txt", "data/10-1.txt", "data/102-1.txt", "data/103-1.txt")
+  # paths
+  results <- ldply(paths, process_eprime_file)
+  write.table(results, results_f, sep=",", row.names = FALSE)
+}
 
 
 library(readr)
